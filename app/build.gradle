@@ -86,4 +86,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
+
+    // OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
 }
