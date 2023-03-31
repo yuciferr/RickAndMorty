@@ -1,6 +1,6 @@
 package com.example.rickandmorty.base
 
-import com.example.rickandmorty.model.ErrorModel
+import com.example.rickandmorty.model.error.ErrorModel
 import com.example.rickandmorty.util.NetworkResult
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +28,7 @@ abstract class BaseRepository {
 private fun errorBodyParser(error: String?): String{
     error?.let{
         return try{
-            val errorResponse = Gson().fromJson(error,ErrorModel::class.java)
+            val errorResponse = Gson().fromJson(error, ErrorModel::class.java)
             val errorMessage = errorResponse.error
             errorMessage ?: "Unknown Error"
         }catch (e: Exception){
