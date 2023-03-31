@@ -1,6 +1,6 @@
 package com.example.rickandmorty.di
 
-import androidx.viewbinding.BuildConfig
+import com.example.rickandmorty.BuildConfig
 import com.example.rickandmorty.network.ApiFactory
 import com.example.rickandmorty.util.Constants.BASE_URL
 import dagger.Module

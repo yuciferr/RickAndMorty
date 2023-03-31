@@ -6,9 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.rickandmorty.model.character.CharacterModel
 import com.example.rickandmorty.model.location.LocationModel
 import com.example.rickandmorty.util.NetworkResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository): ViewModel() {
 
     private val _characters : MutableLiveData<CharacterModel?> = MutableLiveData()
