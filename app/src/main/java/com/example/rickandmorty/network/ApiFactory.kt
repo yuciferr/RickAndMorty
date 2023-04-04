@@ -11,11 +11,11 @@ interface ApiFactory {
 
     @GET(CHARACTER_ENDPOINT)
     suspend fun getCharacter(
-        @Query("limit") limit: String
+        @Query("page") page: String
     ): CharacterModel
 
     @GET(LOCATION_ENDPOINT)
     suspend fun getLocation(
-        @Query("limit") limit: String
+        @Query("page") page: String
     ): LocationModel
 }
