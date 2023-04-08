@@ -3,6 +3,7 @@ package com.example.rickandmorty.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ManCharacterItemBinding
 import com.example.rickandmorty.databinding.UnknownCharacterItemBinding
@@ -22,12 +23,10 @@ class HomeRecyclerAdapter(private val items: List<Result?>?) :
     class ManViewHolder(private val binding: ManCharacterItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Result) {
             binding.manNameTv.text = item.name
-            //binding.manImageIv.setImageResource(item.image?.toInt() ?: R.drawable.character_image)
-            when(item.gender){
-                "Male" -> binding.manGenderIv.setImageResource(R.drawable.ic_baseline_male_24)
-                "Female" -> binding.manGenderIv.setImageResource(R.drawable.ic_baseline_female_24)
-                else -> binding.manGenderIv.setImageResource(R.drawable.ic_baseline_question_mark_24)
-            }
+            Glide.with(binding.root)
+                .load(item.image)
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(binding.manImageIv)
         }
     }
 
@@ -35,6 +34,10 @@ class HomeRecyclerAdapter(private val items: List<Result?>?) :
         fun bind(item:Result){
             binding.apply {
                 womanNameTv.text = item.name
+                Glide.with(binding.root)
+                    .load(item.image)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(womanImageIv)
             }
         }
     }
@@ -43,6 +46,12 @@ class HomeRecyclerAdapter(private val items: List<Result?>?) :
         fun bind(item:Result){
             binding.apply {
                 unknownNameTv.text = item.name
+                Glide.with(binding.root)
+                    .load(item.image)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(unknownImageIv)
+
+                unknownGenderIv.setImageResource(R.drawable.ic_baseline_question_mark_24)
             }
         }
     }
