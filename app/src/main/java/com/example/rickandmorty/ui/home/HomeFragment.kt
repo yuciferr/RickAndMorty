@@ -1,10 +1,7 @@
 package com.example.rickandmorty.ui.home
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.base.BaseFragment
 import com.example.rickandmorty.databinding.FragmentHomeBinding
@@ -26,9 +23,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     override fun onCreateFinished() {
-        viewModel.characters.observe(viewLifecycleOwner, Observer {
-            setRecyclerView(it?.results)
-        })
+        viewModel.characters.observe(viewLifecycleOwner) {
+            setCharacterAdapter(it?.results)
+        }
+        viewModel.locations.observe(viewLifecycleOwner) {
+            val first = LocationItem(1, it?.results?.get(0)!!)
+            val list = mutableListOf(first)
+            for (i in 1 until it.results.size) {
+                list.add(LocationItem(0, it.results[i]!!))
+            }
+            setLocationAdapter(list)
+        }
 
     }
 
@@ -40,10 +45,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     }
 
-    private fun setRecyclerView(characters : List<Result?>?){
+    private fun setCharacterAdapter(characters : List<Result?>?){
         binding.charactersRv.apply {
-            adapter = HomeRecyclerAdapter(characters)
+            adapter = CharacterAdapter(characters)
             layoutManager = LinearLayoutManager(requireContext())
+        }
+
+    }
+
+    private fun setLocationAdapter(locations: MutableList<LocationItem>){
+        binding.locationsRv.apply {
+            adapter = LocationAdapter(locations)
+            // horizontal scroll
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
     }

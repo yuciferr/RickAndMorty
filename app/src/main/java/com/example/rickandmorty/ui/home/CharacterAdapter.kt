@@ -11,7 +11,7 @@ import com.example.rickandmorty.databinding.WomanCharacterItemBinding
 import com.example.rickandmorty.model.character.Result
 
 
-class HomeRecyclerAdapter(private val items: List<Result?>?) :
+class CharacterAdapter(private val items: List<Result?>?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     companion object{
