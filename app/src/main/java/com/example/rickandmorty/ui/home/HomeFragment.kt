@@ -1,6 +1,7 @@
 package com.example.rickandmorty.ui.home
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.base.BaseFragment
@@ -42,7 +43,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     override fun observerEvents() {
-
+        LocationAdapter.selectedLocation.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it.result.name, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setCharacterAdapter(characters : List<Result?>?){
@@ -53,7 +56,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     }
 
-    private fun setLocationAdapter(locations: MutableList<LocationItem>){
+    private fun setLocationAdapter(locations: List<LocationItem>){
         binding.locationsRv.apply {
             adapter = LocationAdapter(locations)
             // horizontal scroll

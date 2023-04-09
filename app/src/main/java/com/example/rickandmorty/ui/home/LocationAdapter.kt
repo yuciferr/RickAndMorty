@@ -3,6 +3,7 @@ package com.example.rickandmorty.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.LocationItemBinding
 
@@ -13,6 +14,7 @@ class LocationAdapter(private val items: List<LocationItem?>?) :
     companion object {
         const val SELECTED = 1
         const val UNSELECTED = 0
+        var selectedLocation = MutableLiveData<LocationItem>()
     }
 
 
@@ -26,6 +28,7 @@ class LocationAdapter(private val items: List<LocationItem?>?) :
                 isCheckable = false
 
             }
+            selectedLocation.value = item
         }
     }
 
