@@ -1,9 +1,10 @@
 package com.example.rickandmorty.ui.home
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmorty.model.character.CharacterModel
+import com.example.rickandmorty.model.character.Character
 import com.example.rickandmorty.model.location.LocationModel
 import com.example.rickandmorty.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,8 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
 
-    private val _characters: MutableLiveData<CharacterModel?> = MutableLiveData()
-    val characters: MutableLiveData<CharacterModel?>
+    private val _characters: MutableLiveData<List<Character?>?> = MutableLiveData()
+    val characters: MutableLiveData<List<Character?>?>
         get() = _characters
 
     private val _isCharacterLoading: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -39,20 +40,6 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         get() = _locationError
 
 
-    fun getCharacters(page: String) = viewModelScope.launch {
-        _isCharacterLoading.value = true
-        when (val request = repository.getCharacters(page)) {
-            is NetworkResult.Success -> {
-                _characters.value = request.data
-                _isCharacterLoading.value = false
-            }
-            is NetworkResult.Error -> {
-                _characterError.value = request.message
-                _isCharacterLoading.value = false
-            }
-        }
-    }
-
     fun getLocations(page: String) = viewModelScope.launch {
         _isLocationLoading.value = true
         when (val request = repository.getLocations(page)) {
@@ -65,5 +52,42 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
                 _isLocationLoading.value = false
             }
         }
+    }
+
+    private fun getCharacter(id: String) = viewModelScope.launch {
+        _isCharacterLoading.value = true
+        when (val request = repository.getCharacter(id)) {
+            is NetworkResult.Success -> {
+                _characters.value = request.data
+                _isCharacterLoading.value = false
+            }
+            is NetworkResult.Error -> {
+                _characterError.value = request.message
+                _isCharacterLoading.value = false
+            }
+        }
+    }
+
+    fun getResidents(locationItem: LocationItem) : Boolean{
+        val residents = locationItem.result.residents
+        if(residents.isNullOrEmpty()){
+            _characterError.value = "No residents found"
+            return false
+        }else{
+            var ids: String = residents[0]?.split("/")?.last().toString()
+            residents.forEachIndexed {index, it ->
+                if (it != null && index != 0) {
+                    val id = it.split("/").last()
+                    ids += ",$id"
+                }
+            }
+            Log.d("yucifer", "getResidents: $ids")
+            getCharacter(ids)
+            return true
+        }
+    }
+
+    companion object{
+        var selectedLocation = MutableLiveData<LocationItem>()
     }
 }

@@ -6,10 +6,10 @@ import javax.inject.Inject
 
 class HomeRepository @Inject constructor(private val apiFactory: ApiFactory) : BaseRepository() {
 
-    suspend fun getCharacters(
-        page: String
+    suspend fun getCharacter(
+        id: String
     ) = safeApiRequest {
-        apiFactory.getCharacter(page)
+        apiFactory.getCharacter(id)
     }
 
     suspend fun getLocations(

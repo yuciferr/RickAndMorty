@@ -3,7 +3,7 @@ package com.example.rickandmorty.model.character
 
 import com.google.gson.annotations.SerializedName
 
-data class Result(
+data class Character(
     @SerializedName("created")
     val created: String?,
     @SerializedName("episode")

@@ -8,10 +8,10 @@ import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ManCharacterItemBinding
 import com.example.rickandmorty.databinding.UnknownCharacterItemBinding
 import com.example.rickandmorty.databinding.WomanCharacterItemBinding
-import com.example.rickandmorty.model.character.Result
+import com.example.rickandmorty.model.character.Character
 
 
-class CharacterAdapter(private val items: List<Result?>?) :
+class CharacterAdapter(private val items: List<Character?>?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     companion object{
@@ -21,7 +21,7 @@ class CharacterAdapter(private val items: List<Result?>?) :
     }
 
     class ManViewHolder(private val binding: ManCharacterItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Result) {
+        fun bind(item: Character) {
             binding.manNameTv.text = item.name
             Glide.with(binding.root)
                 .load(item.image)
@@ -31,7 +31,7 @@ class CharacterAdapter(private val items: List<Result?>?) :
     }
 
     class WomanViewHolder(private val binding: WomanCharacterItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item:Result){
+        fun bind(item : Character){
             binding.apply {
                 womanNameTv.text = item.name
                 Glide.with(binding.root)
@@ -43,7 +43,7 @@ class CharacterAdapter(private val items: List<Result?>?) :
     }
 
     class UnknownViewHolder(private val binding: UnknownCharacterItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item:Result){
+        fun bind(item:Character){
             binding.apply {
                 unknownNameTv.text = item.name
                 Glide.with(binding.root)
