@@ -2,6 +2,7 @@ package com.example.rickandmorty.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.rickandmorty.R
@@ -27,6 +28,9 @@ class CharacterAdapter(private val items: List<Character?>?) :
                 .load(item.image)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(binding.manImageIv)
+            binding.manCharacterCv.setOnClickListener {
+                Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_detailFragment)
+            }
         }
     }
 
@@ -38,6 +42,10 @@ class CharacterAdapter(private val items: List<Character?>?) :
                     .load(item.image)
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(womanImageIv)
+
+                womanCharacterCv.setOnClickListener {
+                    Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_detailFragment)
+                }
             }
         }
     }
@@ -52,6 +60,9 @@ class CharacterAdapter(private val items: List<Character?>?) :
                     .into(unknownImageIv)
 
                 unknownGenderIv.setImageResource(R.drawable.ic_baseline_question_mark_24)
+                unknownCharacterCv.setOnClickListener {
+                    Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_detailFragment)
+                }
             }
         }
     }
