@@ -1,17 +1,15 @@
 package com.example.rickandmorty.ui.home
 
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.base.BaseFragment
 import com.example.rickandmorty.databinding.FragmentHomeBinding
 import com.example.rickandmorty.model.character.Character
+import com.example.rickandmorty.ui.home.HomeViewModel.Companion.selectedLocation
 import com.example.rickandmorty.util.Constants.PAGE
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.internal.notify
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
@@ -26,13 +24,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     override fun onCreateFinished() {
-        viewModel.locations.observe(viewLifecycleOwner) {
-            val first = LocationItem(1, it?.results?.get(0)!!)
-            val list = mutableListOf(first)
-            for (i in 1 until it.results.size) {
-                list.add(LocationItem(0, it.results[i]!!))
-            }
-            setLocationAdapter(list)
+        viewModel.locations2.observe(viewLifecycleOwner) { locations ->
+            setLocationAdapter(locations)
         }
 
     }
@@ -42,7 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     override fun observerEvents() {
-        LocationAdapter.selectedLocation.observe(viewLifecycleOwner) {
+        selectedLocation.observe(viewLifecycleOwner) {
             if (viewModel.getResidents(it)){
                 viewModel.characters.observe(viewLifecycleOwner) { characters ->
                     setCharacterAdapter(characters)

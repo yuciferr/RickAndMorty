@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.LocationItemBinding
+import com.example.rickandmorty.ui.home.HomeViewModel.Companion.selectedLocation
 
 
 class LocationAdapter(private val items: List<LocationItem?>?) :
@@ -14,7 +15,6 @@ class LocationAdapter(private val items: List<LocationItem?>?) :
     companion object {
         const val SELECTED = 1
         const val UNSELECTED = 0
-        var selectedLocation = MutableLiveData<LocationItem>()
     }
 
 
