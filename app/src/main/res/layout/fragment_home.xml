@@ -7,6 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="logo"
+        android:cropToPadding="false"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rick_and_morty_logo" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/charactersRv"
         android:layout_width="0dp"
@@ -22,12 +37,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/charactersRv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
 
     <TextView
         android:id="@+id/errorMsg"

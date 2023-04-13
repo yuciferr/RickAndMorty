@@ -15,21 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/main_navigation" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription="logo"
-        android:cropToPadding="false"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/rick_and_morty_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
