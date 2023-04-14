@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageIV"
+            android:id="@+id/imageIv"
             android:layout_width="275dp"
             android:layout_height="275dp"
             android:layout_marginStart="50dp"
@@ -42,14 +42,15 @@
 
         <TextView
             android:id="@+id/nameTv"
-            android:layout_width="wrap_content"
+            android:layout_width="275dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/avenir_bold"
             android:text="Beth Smith"
+            android:textAlignment="center"
             android:textSize="28sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/imageIv"
+            app:layout_constraintStart_toStartOf="@+id/imageIv"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
@@ -262,7 +263,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageIV">
+            app:layout_constraintTop_toBottomOf="@+id/imageIv">
 
             <TextView
                 android:id="@+id/textView1"
