@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rickandmorty.model.character.Character
 import com.example.rickandmorty.model.location.LocationModel
-import com.example.rickandmorty.ui.home.LocationAdapter.Companion.SELECTED
 import com.example.rickandmorty.ui.home.LocationAdapter.Companion.UNSELECTED
 import com.example.rickandmorty.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -106,12 +105,11 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         }
     }
 
-    val locations2 = MutableLiveData<List<LocationItem>>()
-    private fun setLocationView() {
+    val locations2 = MutableLiveData<ArrayList<LocationItem>>()
+    private fun setLocationView() = viewModelScope.launch {
         _locations.value?.let {
-            val first = LocationItem(SELECTED, it.results?.get(0)!!)
-            val list = mutableListOf(first)
-            for (i in 1 until it.results.size) {
+           val list = ArrayList<LocationItem>()
+            for (i in 0 until it.results!!.size) {
                 list.add(LocationItem(UNSELECTED, it.results[i]!!))
             }
             locations2.value = list

@@ -85,6 +85,10 @@ class LocationAdapter(private val items: List<LocationItem?>?) :
 
 
     override fun getItemViewType(position: Int): Int {
+
+        //fixed bug when orientation changed and selectedLocation.value is null
+        if (selectedLocation.value?.result?.id == items?.get(position)?.result?.id) return SELECTED
+
         return when (items?.get(position)?.selected) {
             SELECTED -> SELECTED
             else -> UNSELECTED
