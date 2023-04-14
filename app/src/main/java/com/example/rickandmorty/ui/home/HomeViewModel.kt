@@ -118,5 +118,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
 
     companion object {
         var selectedLocation = MutableLiveData<LocationItem>()
+        var characterPosition = MutableLiveData<Int>()
+        var locationPosition = MutableLiveData<Int>()
     }
 }

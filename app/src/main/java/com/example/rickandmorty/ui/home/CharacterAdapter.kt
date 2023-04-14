@@ -24,7 +24,7 @@ class CharacterAdapter(private val items: List<Character?>?) :
 
     class ManViewHolder(private val binding: ManCharacterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Character) {
+        fun bind(item: Character, position: Int) {
             binding.manNameTv.text = item.name
             Glide.with(binding.root).load(item.image).placeholder(R.drawable.ic_launcher_background)
                 .into(binding.manImageIv)
@@ -41,6 +41,7 @@ class CharacterAdapter(private val items: List<Character?>?) :
                     item.episode,
                     item.created
                 )
+                HomeViewModel.characterPosition.value = position
                 val action =
                     HomeFragmentDirections.actionHomeFragmentToDetailFragment(characterDetail)
                 Navigation.findNavController(it).navigate(action)
@@ -50,7 +51,7 @@ class CharacterAdapter(private val items: List<Character?>?) :
 
     class WomanViewHolder(private val binding: WomanCharacterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Character) {
+        fun bind(item: Character, position: Int) {
             binding.apply {
                 womanNameTv.text = item.name
                 Glide.with(binding.root).load(item.image)
@@ -68,6 +69,7 @@ class CharacterAdapter(private val items: List<Character?>?) :
                         item.episode,
                         item.created
                     )
+                    HomeViewModel.characterPosition.value = position
                     val action =
                         HomeFragmentDirections.actionHomeFragmentToDetailFragment(characterDetail)
                     Navigation.findNavController(it).navigate(action)
@@ -78,7 +80,7 @@ class CharacterAdapter(private val items: List<Character?>?) :
 
     class UnknownViewHolder(private val binding: UnknownCharacterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Character) {
+        fun bind(item: Character, position: Int) {
             binding.apply {
                 unknownNameTv.text = item.name
                 Glide.with(binding.root).load(item.image)
@@ -98,6 +100,7 @@ class CharacterAdapter(private val items: List<Character?>?) :
                         item.episode,
                         item.created
                     )
+                    HomeViewModel.characterPosition.value = position
                     val action =
                         HomeFragmentDirections.actionHomeFragmentToDetailFragment(characterDetail)
                     Navigation.findNavController(it).navigate(action)
@@ -131,9 +134,9 @@ class CharacterAdapter(private val items: List<Character?>?) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         return when (holder) {
-            is ManViewHolder -> holder.bind(items?.get(position)!!)
-            is WomanViewHolder -> holder.bind(items?.get(position)!!)
-            is UnknownViewHolder -> holder.bind(items?.get(position)!!)
+            is ManViewHolder -> holder.bind(items?.get(position)!!, position)
+            is WomanViewHolder -> holder.bind(items?.get(position)!!, position)
+            is UnknownViewHolder -> holder.bind(items?.get(position)!!, position)
             else -> throw IllegalArgumentException("Unknown view holder")
         }
     }

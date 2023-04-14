@@ -50,9 +50,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         binding.charactersRv.apply {
             adapter = CharacterAdapter(characters)
             layoutManager = LinearLayoutManager(requireContext())
-            /*(layoutManager as LinearLayoutManager).scrollToPosition(
-                (layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition())
-            Log.d("yusuf", (layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition().toString())*/
+           if (HomeViewModel.characterPosition.value!=null){
+               scrollToPosition(HomeViewModel.characterPosition.value!!-2)
+           }
+
 
         }
 
@@ -73,6 +74,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
             // horizontal scroll
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            if (HomeViewModel.locationPosition.value!=null){
+                scrollToPosition(HomeViewModel.locationPosition.value!!)
+            }
         }
 
     }

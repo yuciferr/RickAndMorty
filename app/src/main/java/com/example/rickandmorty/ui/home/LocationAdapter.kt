@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.LocationItemBinding
+import com.example.rickandmorty.ui.home.HomeViewModel.Companion.locationPosition
 import com.example.rickandmorty.ui.home.HomeViewModel.Companion.selectedLocation
 
 
@@ -20,7 +21,7 @@ class LocationAdapter(private val items: List<LocationItem?>?) :
 
     class SelectedViewHolder(private val binding: LocationItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: LocationItem) {
+        fun bind(item: LocationItem, position: Int) {
             binding.locationCard.apply {
                 text = item.result.name
                 isCheckedIconVisible = true
@@ -29,6 +30,7 @@ class LocationAdapter(private val items: List<LocationItem?>?) :
 
             }
             selectedLocation.value = item
+            locationPosition.value = position
         }
     }
 
@@ -68,7 +70,7 @@ class LocationAdapter(private val items: List<LocationItem?>?) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is SelectedViewHolder -> {
-                holder.bind(items?.get(position)!!)
+                holder.bind(items?.get(position)!!, position)
             }
             is UnSelectedViewHolder -> {
                 holder.bind(items?.get(position)!!)
