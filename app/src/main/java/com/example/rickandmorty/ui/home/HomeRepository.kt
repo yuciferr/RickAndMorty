@@ -12,6 +12,12 @@ class HomeRepository @Inject constructor(private val apiFactory: ApiFactory) : B
         apiFactory.getCharacter(id)
     }
 
+    suspend fun getOneCharacter(
+        id: String
+    ) = safeApiRequest {
+        apiFactory.getOneCharacter(id)
+    }
+
     suspend fun getLocations(
         page: String
     ) = safeApiRequest {

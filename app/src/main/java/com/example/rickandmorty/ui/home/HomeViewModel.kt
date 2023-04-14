@@ -1,6 +1,5 @@
 package com.example.rickandmorty.ui.home
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -71,6 +70,20 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         }
     }
 
+    private fun getOneCharacter(id: String) = viewModelScope.launch {
+        _isCharacterLoading.value = true
+        when (val request = repository.getOneCharacter(id)) {
+            is NetworkResult.Success -> {
+                _characters.value = listOf(request.data)
+                _isCharacterLoading.value = false
+            }
+            is NetworkResult.Error -> {
+                _characterError.value = request.message
+                _isCharacterLoading.value = false
+            }
+        }
+    }
+
     fun getResidents(locationItem: LocationItem): Boolean {
         val residents = locationItem.result.residents
         if (residents.isNullOrEmpty()) {
@@ -84,8 +97,11 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
                     ids += ",$id"
                 }
             }
-            Log.d("yucifer", "getResidents: $ids")
-            getCharacter(ids)
+            if (residents.size == 1) {
+                getOneCharacter(ids)
+            }else{
+                getCharacter(ids)
+            }
             return true
         }
     }

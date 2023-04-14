@@ -14,6 +14,11 @@ interface ApiFactory {
        @Path("id") id: String
     ): List<Character>
 
+    @GET("$CHARACTER_ENDPOINT/{id}")
+    suspend fun getOneCharacter(
+        @Path("id") id: String
+    ): Character
+
     @GET(LOCATION_ENDPOINT)
     suspend fun getLocation(
         @Query("page") page: String
