@@ -25,8 +25,5 @@
         <argument
             android:name="character"
             app:argType="com.example.rickandmorty.model.character.CharacterDetail" />
-        <action
-            android:id="@+id/action_detailFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

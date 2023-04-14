@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentDetailBinding
 
 
@@ -38,7 +37,7 @@ class DetailFragment : Fragment() {
 
 
             backBtn.setOnClickListener {
-                it.findNavController().navigate(R.id.action_detailFragment_to_homeFragment)
+                it.findNavController().navigateUp()
             }
 
         }
