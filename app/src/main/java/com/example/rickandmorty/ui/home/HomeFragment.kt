@@ -22,7 +22,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         viewModel.getLocations(PAGE)
 
     }
-
     override fun onCreateFinished() {
         viewModel.locations2.observe(viewLifecycleOwner) { locations ->
             setLocationAdapter(locations)
@@ -36,39 +35,44 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     override fun observerEvents() {
         selectedLocation.observe(viewLifecycleOwner) {
-            if (viewModel.getResidents(it)){
+            if (viewModel.getResidents(it)) {
                 viewModel.characters.observe(viewLifecycleOwner) { characters ->
                     setCharacterAdapter(characters)
                 }
-            }else{
+            } else {
                 clearCharacterAdapter(viewModel.characterError.value)
             }
 
         }
     }
 
-    private fun setCharacterAdapter(characters : List<Character?>?){
+    private fun setCharacterAdapter(characters: List<Character?>?) {
         binding.charactersRv.apply {
             adapter = CharacterAdapter(characters)
             layoutManager = LinearLayoutManager(requireContext())
+            /*(layoutManager as LinearLayoutManager).scrollToPosition(
+                (layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition())
+            Log.d("yusuf", (layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition().toString())*/
+
         }
 
     }
 
-    private fun clearCharacterAdapter(error : String? = null){
+    private fun clearCharacterAdapter(error: String? = null) {
         binding.charactersRv.apply {
             adapter = null
         }
-        if (error != null){
+        if (error != null) {
             Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun setLocationAdapter(locations: List<LocationItem>){
+    private fun setLocationAdapter(locations: List<LocationItem>) {
         binding.locationsRv.apply {
             adapter = LocationAdapter(locations)
             // horizontal scroll
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
     }

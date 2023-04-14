@@ -10,58 +10,97 @@ import com.example.rickandmorty.databinding.ManCharacterItemBinding
 import com.example.rickandmorty.databinding.UnknownCharacterItemBinding
 import com.example.rickandmorty.databinding.WomanCharacterItemBinding
 import com.example.rickandmorty.model.character.Character
+import com.example.rickandmorty.model.character.CharacterDetail
 
 
 class CharacterAdapter(private val items: List<Character?>?) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    companion object{
+    companion object {
         const val GENDER_MAN = 1
         const val GENDER_WOMAN = 2
         const val GENDER_UNKNOWN = 3
     }
 
-    class ManViewHolder(private val binding: ManCharacterItemBinding): RecyclerView.ViewHolder(binding.root) {
+    class ManViewHolder(private val binding: ManCharacterItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Character) {
             binding.manNameTv.text = item.name
-            Glide.with(binding.root)
-                .load(item.image)
-                .placeholder(R.drawable.ic_launcher_background)
+            Glide.with(binding.root).load(item.image).placeholder(R.drawable.ic_launcher_background)
                 .into(binding.manImageIv)
+
             binding.manCharacterCv.setOnClickListener {
-                Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_detailFragment)
+                val characterDetail = CharacterDetail(
+                    item.name,
+                    item.status,
+                    item.species,
+                    item.gender,
+                    item.image,
+                    item.location?.name,
+                    item.origin?.name,
+                    item.episode,
+                    item.created
+                )
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(characterDetail)
+                Navigation.findNavController(it).navigate(action)
             }
         }
     }
 
-    class WomanViewHolder(private val binding: WomanCharacterItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item : Character){
+    class WomanViewHolder(private val binding: WomanCharacterItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Character) {
             binding.apply {
                 womanNameTv.text = item.name
-                Glide.with(binding.root)
-                    .load(item.image)
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .into(womanImageIv)
+                Glide.with(binding.root).load(item.image)
+                    .placeholder(R.drawable.ic_launcher_background).into(womanImageIv)
 
                 womanCharacterCv.setOnClickListener {
-                    Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_detailFragment)
+                    val characterDetail = CharacterDetail(
+                        item.name,
+                        item.status,
+                        item.species,
+                        item.gender,
+                        item.image,
+                        item.location?.name,
+                        item.origin?.name,
+                        item.episode,
+                        item.created
+                    )
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToDetailFragment(characterDetail)
+                    Navigation.findNavController(it).navigate(action)
                 }
             }
         }
     }
 
-    class UnknownViewHolder(private val binding: UnknownCharacterItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item:Character){
+    class UnknownViewHolder(private val binding: UnknownCharacterItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Character) {
             binding.apply {
                 unknownNameTv.text = item.name
-                Glide.with(binding.root)
-                    .load(item.image)
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .into(unknownImageIv)
+                Glide.with(binding.root).load(item.image)
+                    .placeholder(R.drawable.ic_launcher_background).into(unknownImageIv)
 
                 unknownGenderIv.setImageResource(R.drawable.ic_baseline_question_mark_24)
+
                 unknownCharacterCv.setOnClickListener {
-                    Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_detailFragment)
+                    val characterDetail = CharacterDetail(
+                        item.name,
+                        item.status,
+                        item.species,
+                        item.gender,
+                        item.image,
+                        item.location?.name,
+                        item.origin?.name,
+                        item.episode,
+                        item.created
+                    )
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToDetailFragment(characterDetail)
+                    Navigation.findNavController(it).navigate(action)
                 }
             }
         }
@@ -69,15 +108,29 @@ class CharacterAdapter(private val items: List<Character?>?) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            GENDER_MAN -> ManViewHolder(ManCharacterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            GENDER_WOMAN -> WomanViewHolder(WomanCharacterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            else -> UnknownViewHolder(UnknownCharacterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            }
+        return when (viewType) {
+            GENDER_MAN -> ManViewHolder(
+                ManCharacterItemBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+            )
+            GENDER_WOMAN -> WomanViewHolder(
+                WomanCharacterItemBinding.inflate(
+                    LayoutInflater.from(
+                        parent.context
+                    ), parent, false
+                )
+            )
+            else -> UnknownViewHolder(
+                UnknownCharacterItemBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+            )
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        return when(holder){
+        return when (holder) {
             is ManViewHolder -> holder.bind(items?.get(position)!!)
             is WomanViewHolder -> holder.bind(items?.get(position)!!)
             is UnknownViewHolder -> holder.bind(items?.get(position)!!)
@@ -90,7 +143,7 @@ class CharacterAdapter(private val items: List<Character?>?) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(items?.get(position)?.gender){
+        return when (items?.get(position)?.gender) {
             "Male" -> GENDER_MAN
             "Female" -> GENDER_WOMAN
             else -> GENDER_UNKNOWN
