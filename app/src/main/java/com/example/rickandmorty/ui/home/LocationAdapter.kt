@@ -3,7 +3,6 @@ package com.example.rickandmorty.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.LocationItemBinding
 import com.example.rickandmorty.ui.home.HomeViewModel.Companion.locationPosition
@@ -76,11 +75,15 @@ class LocationAdapter(private val items: List<LocationItem?>?) :
                 holder.bind(items?.get(position)!!)
             }
         }
+
+        // if adapter created first time, select first item
+        if (selectedLocation.value == null) {
+            selectedLocation.value = items?.get(0)
+            locationPosition.value = 0
+        }
         holder.itemView.setOnClickListener {
-            items?.forEach {
-                it?.selected = UNSELECTED
-            }
-            items?.get(position)?.selected = SELECTED
+            selectedLocation.value = items?.get(position)
+            locationPosition.value = position
             notifyDataSetChanged()
         }
     }
@@ -90,7 +93,6 @@ class LocationAdapter(private val items: List<LocationItem?>?) :
 
         //fixed bug when orientation changed and selectedLocation.value is null
         if (selectedLocation.value?.result?.id == items?.get(position)?.result?.id) return SELECTED
-
         return when (items?.get(position)?.selected) {
             SELECTED -> SELECTED
             else -> UNSELECTED
