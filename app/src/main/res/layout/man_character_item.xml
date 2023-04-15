@@ -30,6 +30,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:text="Beth Smith"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/manImageIv"
@@ -41,11 +42,11 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginStart="16dp"
+            app:tint="?android:attr/textColorPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/manNameTv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/manNameTv"
-            app:srcCompat="@drawable/ic_baseline_male_24"
-            />
+            app:srcCompat="@drawable/ic_baseline_male_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
