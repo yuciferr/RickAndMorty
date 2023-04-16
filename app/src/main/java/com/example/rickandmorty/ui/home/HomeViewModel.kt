@@ -44,7 +44,17 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         _isLocationLoading.value = true
         when (val request = repository.getLocations(page)) {
             is NetworkResult.Success -> {
-                _locations.value = request.data
+                //add new locations to end of the list
+                val newLocations = request.data?.results
+                val newInfo = request.data?.info
+                val oldLocations = _locations.value?.results
+                if (oldLocations != null) {
+                    oldLocations.addAll(newLocations!!)
+                    _locations.value = LocationModel(newInfo, oldLocations)
+                }else{
+                _locations.value = request.data}
+
+
                 setLocationView()
                 _isLocationLoading.value = false
             }
@@ -120,5 +130,6 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         var selectedLocation = MutableLiveData<LocationItem>()
         var characterPosition = MutableLiveData<Int>()
         var locationPosition = MutableLiveData<Int>()
+        var locationPage = 1
     }
 }

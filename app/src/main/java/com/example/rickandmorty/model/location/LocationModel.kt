@@ -7,5 +7,5 @@ data class LocationModel(
     @SerializedName("info")
     val info: Info?,
     @SerializedName("results")
-    val results: List<Result?>?
+    val results: ArrayList<Result?>?
 )

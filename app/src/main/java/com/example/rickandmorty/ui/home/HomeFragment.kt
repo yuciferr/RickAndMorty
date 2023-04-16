@@ -1,16 +1,20 @@
 package com.example.rickandmorty.ui.home
 
 import android.os.Bundle
+import android.os.Handler
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.base.BaseFragment
 import com.example.rickandmorty.databinding.FragmentHomeBinding
 import com.example.rickandmorty.model.character.Character
+import com.example.rickandmorty.ui.home.HomeViewModel.Companion.locationPage
 import com.example.rickandmorty.ui.home.HomeViewModel.Companion.selectedLocation
-import com.example.rickandmorty.util.Constants.PAGE
 import dagger.hilt.android.AndroidEntryPoint
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     FragmentHomeBinding::inflate
@@ -19,7 +23,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getLocations(PAGE)
+        viewModel.getLocations(locationPage.toString())
 
     }
     override fun onCreateFinished() {
@@ -44,6 +48,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
             }
 
         }
+
+        binding.locationsRv.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                //find last visible item position
+                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+
+                if (lastVisibleItemPosition == viewModel.locations2.value!!.size - 1) {
+                    HomeViewModel.locationPosition.value = lastVisibleItemPosition
+
+                    locationLoading()
+
+                    Handler().postDelayed({
+                        locationPage++
+                        viewModel.getLocations(locationPage.toString())
+                        locationLoading(false)
+                    }, 1200)
+
+                }
+            }
+
+        })
     }
 
     private fun setCharacterAdapter(characters: List<Character?>?) {
@@ -79,6 +107,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
             }
         }
 
+    }
+
+    private fun locationLoading(isLoad: Boolean = true){
+        if (isLoad){
+            binding.locationPb.visibility = View.VISIBLE
+        }else{
+            binding.locationPb.visibility = View.GONE
+        }
     }
 
 }
