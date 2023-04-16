@@ -276,10 +276,12 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/baseline_arrow_back_24"
             app:cornerRadius="8dp"
             app:iconTint="?android:attr/textColorPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/nameTv"
+            app:layout_constraintEnd_toStartOf="@+id/nameTv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/nameTv" />
 
